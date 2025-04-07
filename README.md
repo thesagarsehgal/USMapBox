@@ -1,24 +1,35 @@
-### Running the application 
+# Running the Application
 
-1. Running the docker compose container 
+### 1. Start Docker Containers
+Use the following command to build and run the Docker containers:
+
 ```
 docker-compose up --build
 ```
 
-2. run the script to load the downloaded script into the databse  
+### 2. Load Data into the Database
+After the containers are running:
 
-2.1 Enter into the docker container of the backend service   
+#### 2.1. Enter the backend service container:
 ```
 docker-compose exec tsgbe sh
 ```
-2.2. Run commands to load the scrapped data in the database
+
+#### 2.2. Run the data loading script:
 ```
-cd src/scripts 
+cd src/scripts
 python load_db.py
 ```
+Note: The load_db.py script loads data into the database from CSV files located in src/scripts/csv_files.
 
-Prereq: To run the scrapper, to extract all the data from the website, run the following command `python load_db.py`, whcih loads data in `src/scripts/csv_files`
+### 3. Accessing the Services
+Frontend: http://localhost:3000
+Backend (Swagger Docs): http://localhost:8080/docs
+PostgreSQL DB: localhost:5433, database name: census_db
 
-3. access the FE from localhost:3000, BE from localhost:8080/docs and DB from localhost:5433/census_db  
+### Optional: Run the Scraper Separately
+To scrape and generate data (if not already downloaded), you can directly run:
 
-
+```
+python src/scripts/load_db.py
+```
