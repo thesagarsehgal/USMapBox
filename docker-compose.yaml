@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: postgis_container
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: census_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  tsgbe:
+    build:
+      context: ./tsgbe
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      postgis:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgis
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: census_db
+
+  tsgfe:
+    build:
+      context: ./tsgfe
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - tsgbe
+      - postgis
+    environment:
+      BE_HOST: tsgbe
+      BE_PORT: 8080
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./tsgfe:/app
+      - node_modules:/app/node_modules
+  
+volumes:
+  pgdata:
+  node_modules:
