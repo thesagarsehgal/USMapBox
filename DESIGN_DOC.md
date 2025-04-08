@@ -50,7 +50,7 @@
 1. **Separate Boundary Tables**:
    - Better spatial indexing performance
    - Simplified query patterns
-   - Appropriate geometry sizing per boundary type
+   - Appropriate geometry sizing per boundary type. State boundaries geometry would be of simmilar sizes [less number of points] and counties boundaries would be more complex [more number of points] 
    - Alternative: A single table with `parent_fips` would require complex spatial queries
    - Also, the hierarchy of this is limited so, separate tables could be maintained
 
