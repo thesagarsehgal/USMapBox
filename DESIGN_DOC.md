@@ -104,7 +104,7 @@
 }
 ```
 
-Furhter Additions:
-- Additoon of smaller areas like Cities, ZipCodes
-- Proximity Search 
-- Adding Caching Layer for the GeoJSON data and the QuickFacts for freuqntky searched area  
+Further Additions:
+- Addition of smaller areas like Cities, ZipCodes
+- Spatial Queries like Administrative hierarchy queries
+- Adding a Caching Layer for the GeoJSON data and the QuickFacts for frequently searched area  
