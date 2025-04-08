@@ -42,16 +42,17 @@
 | fips_code     | VARCHAR(5)   | Composite Primary Key (Part 1)  |
 | fact_name     | VARCHAR(255) | Composite Primary Key (Part 2)  |
 | fact_value    | TEXT         | Demographic/metric value        |
-| location_type | VARCHAR(20)  | 'state' or 'county'             |
+| location_type | VARCHAR(10)  | 'state' or 'county'             |
 
 ## Architectural Decisions
 
 ### Database Design Rationale
 1. **Separate Boundary Tables**:
-   - ✅ Better spatial indexing performance
-   - ✅ Simplified query patterns
-   - ✅ Appropriate geometry sizing per boundary type
-   - ❌ Alternative: Single table with `parent_fips` would require complex spatial queries
+   - Better spatial indexing performance
+   - Simplified query patterns
+   - Appropriate geometry sizing per boundary type
+   - Alternative: A single table with `parent_fips` would require complex spatial queries
+   - Also, the hierarchy of this is limited so, separate tables could be maintained
 
 2. **Fact Storage Approach**:
    - Flexible EAV (Entity-Attribute-Value) model for demographic facts
