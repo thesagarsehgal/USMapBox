@@ -34,7 +34,7 @@ To scrape and generate data (if not already downloaded), you can directly run:
 python src/scripts/load_db.py
 ```
 
-FE View:
+### FE View:
 <img width="1435" alt="image" src="https://github.com/user-attachments/assets/cfabd019-f99a-43e1-8c02-a35c36834fc3" />
 
 
