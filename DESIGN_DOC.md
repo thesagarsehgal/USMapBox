@@ -1,4 +1,4 @@
-# Geospatial Analytics System Design Document
+# Design Document
 
 ## Data Acquisition Process
 
