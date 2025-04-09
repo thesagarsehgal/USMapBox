@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 
 export default function MapComponent({
   mapRef,
@@ -16,6 +16,26 @@ export default function MapComponent({
   const mapContainerRef = useRef();
   const [mapLoading, setMapLoading] = useState(true);
   const [mapError, setMapError] = useState(null);
+  const [roundedArea, setRoundedArea] = useState()
+
+  const cleanupMapResources = (map) => {
+    if (!map || !map.getStyle()) return;
+
+    try {
+      if (map.getLayer('us-state-data-fill')) {
+        map.removeLayer('us-state-data-fill');
+      }
+      if (map.getLayer('us-state-data-outline')) {
+        map.removeLayer('us-state-data-outline');
+      }
+      
+      if (map.getSource('us-state-data')) {
+        map.removeSource('us-state-data');
+      }
+    } catch (error) {
+      console.error('Cleanup error:', error);
+    }
+  };
 
   useEffect(() => {
     if (!mapboxgl.accessToken) {
@@ -62,6 +82,9 @@ export default function MapComponent({
   }, []);
 
   const initializeMapLayers = (map) => {
+    if (!boundaryType) return;
+    cleanupMapResources(map);
+
     try {
       const boundariesUrl = `${import.meta.env.VITE_BE_HOST}/api/v1/boundaries?boundary_type=${boundaryType}`;
       
@@ -76,7 +99,7 @@ export default function MapComponent({
         source: 'us-state-data',
         paint: {
           'fill-color': '#0080ff',
-          'fill-opacity': 0.5
+          'fill-opacity': 0.2
         }
       });
 
@@ -106,10 +129,7 @@ export default function MapComponent({
   };
 
   useEffect(() => {
-    if (mapRef.current && mapRef.current.isStyleLoaded()) {
-      mapRef.current.removeLayer('us-state-data-fill');
-      mapRef.current.removeLayer('us-state-data-outline');
-      mapRef.current.removeSource('us-state-data');
+    if (mapRef.current && mapRef.current.isStyleLoaded() && boundaryType) {
       initializeMapLayers(mapRef.current);
     }
   }, [boundaryType]);

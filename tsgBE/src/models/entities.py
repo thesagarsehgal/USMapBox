@@ -4,6 +4,7 @@ from geoalchemy2 import Geometry
 
 from src.models.base import Base  # Import base class from base.py
 
+
 class State(Base):
     __tablename__ = 'states'
     

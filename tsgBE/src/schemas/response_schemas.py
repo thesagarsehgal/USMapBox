@@ -28,6 +28,6 @@ class County(BaseModel):
     name: str 
     fips_code: str 
     
-class EncompassingArea(BaseModel):
+class EncompassingAreaResponse(BaseModel):
     states: List[State]
     counties: List[County]

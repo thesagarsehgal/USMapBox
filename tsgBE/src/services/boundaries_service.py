@@ -1,7 +1,7 @@
 from src.schemas.request_schemas import BoundaryTypeEnum
 from src.daos.state_dao import StateDAO
 from src.daos.county_dao import CountyDAO
-from src.schemas.response_schemas import State, County, EncompassingArea, GeoJSONFeature, GeoJSONResponse
+from src.schemas.response_schemas import State, County, EncompassingAreaResponse, GeoJSONFeature, GeoJSONResponse
 import json 
 from fastapi import HTTPException, status
 
@@ -27,7 +27,7 @@ class BoundariesService:
         county_list = self.county_dao.find_counties_in_enclosing_area(db, data.geometry)
         state_list = self.state_dao.find_states_in_enclosing_area(db, data.geometry)
         
-        encompassing_area = EncompassingArea(
+        encompassing_area = EncompassingAreaResponse(
             counties = [County(name=c.county_name, fips_code=c.county_fips) for c in county_list],
             states = [State(name=s.state_name, fips_code=s.state_fips) for s in state_list]
         )
