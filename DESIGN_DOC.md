@@ -119,19 +119,57 @@
     "counties": [
         {
             "name": "Morgan",
-            "fips_code": "49029"
-        },
-        {
-            "name": "Wasatch",
-            "fips_code": "49051"
-        }, ...
-   ]
+            "fips_code": "49029",
+            "geometry": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                [
+                                    [
+                                        -111.26482,
+                                        41.144253
+                                    ],...
+                                 ]
+                              ]
+                        }
+                     }
+                  ]
+               }
+         }
+      ]
 }
 ```
 
+#### Geospatial Query Flow:
+
+**Input:** System takes a geoid (like a FIPS code or boundary ID)
+
+**Processing:**
+- Looks up the polygon shape for that geoid
+- Checks which states and counties fall inside that polygon using PostGIS's ST_Within()
+
+**Output:**
+Returns a clean list of:
+- State IDs/names + their boundaries (as GeoJSON)
+- County IDs/names + their boundaries (as GeoJSON)
+
+**What Happens in UI:**
+- Hover over a county chip → map highlights that county's border
+- Mouse out → highlight disappears
+
+**Why It's Fast:**
+- Uses spatial indexes in PostGIS
+- GeoJSON is lightweight for frontend rendering
 
 
-Further Additions:
+
+
+
+**Further Additions that can be made :**
 - Addition of smaller areas like Cities, ZipCodes
-- Spatial Queries like Administrative hierarchy queries
 - Adding a Caching Layer for the GeoJSON data and the QuickFacts for frequently searched area  
