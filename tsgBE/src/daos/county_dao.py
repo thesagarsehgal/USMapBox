@@ -23,7 +23,10 @@ class CountyDAO:
         return result
 
     def find_counties_in_enclosing_area(self, db:Session, enclosing_area):
-        return db.query(County).filter(
+        return db.query( County.county_fips,
+            County.county_name,
+            func.ST_AsGeoJSON(County.geometry).label('geometry')
+        ).filter(
             func.ST_Within(
                 County.geometry, 
                 func.ST_Transform(enclosing_area, 4326)

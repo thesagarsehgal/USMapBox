@@ -18,9 +18,10 @@ import { Info, LocationOn, Map, Flag } from '@mui/icons-material';
 export default function DataSidebarContent({ 
   location_id, 
   location_name, 
+  setCountyGeoJson,
   facts = [], 
   enclosingStates = [], 
-  enclosingCounties = [] 
+  enclosingCounties = [],
 }) {
   return (
     <Box sx={{ p: 2 }}>
@@ -113,7 +114,6 @@ export default function DataSidebarContent({
                   label={state.name}
                   size="small"
                   variant="outlined"
-                  icon={<Flag fontSize="small" sx={{ color: 'grey.600' }} />}
                 />
               ))}
             </Box>
@@ -133,7 +133,7 @@ export default function DataSidebarContent({
               mt: 1,
               '& .MuiChip-root': {
                 borderColor: 'grey.300',
-                color: 'grey.800'
+                color: 'grey.900'
               }
             }}>
               {enclosingCounties.map((county, index) => (
@@ -142,6 +142,17 @@ export default function DataSidebarContent({
                   label={county.name}
                   size="small"
                   variant="outlined"
+                  onMouseEnter={() => setCountyGeoJson(county.geometry)}
+                  onMouseLeave={() => setCountyGeoJson(null)}
+                  sx={{
+                    borderColor: 'grey.300',
+                    color: 'grey.900',
+                    '&:hover': {
+                      backgroundColor: '#1976d2', // Blue color
+                      color: '#fff', // White text
+                      borderColor: '#1976d2' // Blue border
+                    }
+                  }}
                 />
               ))}
             </Box>

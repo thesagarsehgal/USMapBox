@@ -2,7 +2,7 @@ import { Drawer, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 import { Info } from '@mui/icons-material';
 import DataSidebarContent from './DataSidebarContent';
 
-export default function DataSidebar ({ sidebarOpen, setSidebarOpen, quickFactData, enclosingArea, isLoading, error }) {
+export default function DataSidebar ({ sidebarOpen, setSidebarOpen, quickFactData, enclosingArea, isLoading, error, setCountyGeoJson }) {
   return (
     <Drawer
       anchor="right"
@@ -15,7 +15,14 @@ export default function DataSidebar ({ sidebarOpen, setSidebarOpen, quickFactDat
       ) : error ? (
         <Typography color="error">{error}</Typography>
       ) : quickFactData && (
-        <DataSidebarContent facts={quickFactData.facts} location_id={quickFactData.location_id} location_name={quickFactData.location_name} enclosingStates={enclosingArea.states} enclosingCounties={enclosingArea.counties}/>
+        <DataSidebarContent 
+          facts={quickFactData.facts} 
+          location_id={quickFactData.location_id} 
+          location_name={quickFactData.location_name} 
+          setCountyGeoJson={setCountyGeoJson}
+          enclosingStates={enclosingArea.states} 
+          enclosingCounties={enclosingArea.counties}
+        />
       )}
     </Drawer>
   );

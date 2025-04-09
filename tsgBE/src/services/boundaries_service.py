@@ -15,7 +15,6 @@ class BoundariesService:
         if not geo_id or (len(geo_id) not in (2, 5)):
             raise HTTPException(detail="Invalid geo_id - must be 2 or 5 characters", status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        # get the boundary of region
         if(len(geo_id)==2):
             data = self.state_dao.find_by_fips_code(db, geo_id)
         elif(len(geo_id)==5):
@@ -28,7 +27,7 @@ class BoundariesService:
         state_list = self.state_dao.find_states_in_enclosing_area(db, data.geometry)
         
         encompassing_area = EncompassingAreaResponse(
-            counties = [County(name=c.county_name, fips_code=c.county_fips) for c in county_list],
+            counties = [County(name=c.county_name, fips_code=c.county_fips, geometry=GeoJSONResponse(features=[GeoJSONFeature(properties={}, geometry=json.loads(c.geometry))])) for c in county_list],
             states = [State(name=s.state_name, fips_code=s.state_fips) for s in state_list]
         )
         

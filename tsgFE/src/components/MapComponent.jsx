@@ -11,7 +11,8 @@ export default function MapComponent({
   setCenter,
   zoom,
   setZoom,
-  onMapClick
+  onMapClick, 
+  countyGeoJson
 }) {
   const mapContainerRef = useRef();
   const [mapLoading, setMapLoading] = useState(true);
@@ -32,6 +33,14 @@ export default function MapComponent({
       if (map.getSource('us-state-data')) {
         map.removeSource('us-state-data');
       }
+
+      if (map.getLayer('us-county-data-fill')) {
+        map.removeLayer('us-county-data-fill');
+      }
+      if (map.getSource('us-county-highlight-data')) {
+        map.removeSource('us-county-highlight-data');
+      }
+
     } catch (error) {
       console.error('Cleanup error:', error);
     }
@@ -87,7 +96,7 @@ export default function MapComponent({
 
     try {
       const boundariesUrl = `${import.meta.env.VITE_BE_HOST}/api/v1/boundaries?boundary_type=${boundaryType}`;
-      
+  
       map.addSource('us-state-data', {
         type: 'geojson',
         data: boundariesUrl
@@ -128,11 +137,47 @@ export default function MapComponent({
     }
   };
 
+  const initializeOverlayLayers = (map) => {
+    if (!map || !map.getStyle() || !countyGeoJson) return;
+
+    try {
+      if (map.getSource('us-county-highlight-data')) {
+        map.getSource('us-county-highlight-data').setData(countyGeoJson);
+      } else {
+        map.addSource('us-county-highlight-data', {
+          type: 'geojson',
+          data: countyGeoJson
+        });
+      }
+
+      if (!map.getLayer('us-county-data-fill')) {
+        map.addLayer({
+          id: 'us-county-data-fill',
+          type: 'fill',
+          source: 'us-county-highlight-data',
+          paint: {
+            'fill-color': '#FF0000',
+            'fill-opacity': 0.3, 
+            'fill-outline-color': '#000000'
+          }
+        });
+      }
+    } catch (error) {
+      console.error('County overlay initialization error:', error);
+    }
+  };
+
   useEffect(() => {
     if (mapRef.current && mapRef.current.isStyleLoaded() && boundaryType) {
       initializeMapLayers(mapRef.current);
     }
   }, [boundaryType]);
+
+  useEffect(() => {
+    if (mapRef.current && mapRef.current.isStyleLoaded()) {
+      initializeOverlayLayers(mapRef.current);
+    }
+  }, [countyGeoJson]);
 
   return (
     <div style={{ position: 'relative', height: '100%', width: '100%' }}>

@@ -27,6 +27,7 @@ class State(BaseModel):
 class County(BaseModel):
     name: str 
     fips_code: str 
+    geometry: GeoJSONResponse
     
 class EncompassingAreaResponse(BaseModel):
     states: List[State]

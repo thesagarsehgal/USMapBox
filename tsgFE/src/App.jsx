@@ -25,6 +25,7 @@ function App() {
   const [enclosingArea, setEnclosingArea] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [countyGeoJson, setCountyGeoJson] = useState(null)
 
 
   const handleButtonClick = () => {
@@ -113,6 +114,7 @@ function App() {
         enclosingArea={enclosingArea}
         isLoading={isLoading}
         error={error}
+        setCountyGeoJson={setCountyGeoJson}
       />
       <MapComponent 
         mapRef={mapRef}
@@ -124,6 +126,7 @@ function App() {
         zoom={zoom}
         setZoom={setZoom}
         onMapClick={onMapClick}
+        countyGeoJson={countyGeoJson}
       />
 
     </>
