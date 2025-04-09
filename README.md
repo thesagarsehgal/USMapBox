@@ -35,6 +35,6 @@ python src/scripts/load_db.py
 ```
 
 ### FE View:
-<img width="1435" alt="image" src="https://github.com/user-attachments/assets/cfabd019-f99a-43e1-8c02-a35c36834fc3" />
-
+<img width="1434" alt="image" src="https://github.com/user-attachments/assets/90a20871-0ac7-4eaf-8c06-70558d09816a" />
+<img width="1440" alt="Screenshot 2025-04-09 at 4 38 40 PM" src="https://github.com/user-attachments/assets/1b83d72b-539f-4eb7-8332-666c4c736e3f" />
 
