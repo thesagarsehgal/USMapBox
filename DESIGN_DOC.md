@@ -86,7 +86,7 @@
 ### Endpoint 2: Demographic Data
 `GET /api/v1/data?geo_id=<fips_code>`
 
-**Response (GeoJSON):**
+**Response:**
 ```json
 {
     "location_id": "02",
@@ -103,6 +103,33 @@
     ]
 }
 ```
+
+### Endpoint 3: Encompassing Areas
+`GET /api/v1/encompassing?geo_id=<fips_code>`
+
+**Response:**
+```json
+{
+    "states": [
+        {
+            "name": "Utah",
+            "fips_code": "49"
+        }
+    ],
+    "counties": [
+        {
+            "name": "Morgan",
+            "fips_code": "49029"
+        },
+        {
+            "name": "Wasatch",
+            "fips_code": "49051"
+        }, ...
+   ]
+}
+```
+
+
 
 Further Additions:
 - Addition of smaller areas like Cities, ZipCodes
