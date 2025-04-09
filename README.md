@@ -34,7 +34,7 @@ To scrape and generate data (if not already downloaded), you can directly run:
 python src/scripts/load_db.py
 ```
 
-### [Loom Demo Video](https://www.loom.com/share/7c4c428c593f4d98953e22b17af7a402?sid=c116f209-d179-4e16-a533-6b82da28ec96)
+### [Loom Demo Video](https://www.loom.com/share/dcffe1494bd64209a5507566a0180ded?sid=838a85d6-4ae6-4c5f-85c8-e8fa685cc1df)
 
 
 ### FE View:
