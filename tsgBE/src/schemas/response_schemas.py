@@ -19,3 +19,15 @@ class LocationDataResponse(BaseModel):
     location_id: str
     location_name: Optional[str]
     facts: List[FactData]
+
+class State(BaseModel):
+    name: str 
+    fips_code: str 
+    
+class County(BaseModel):
+    name: str 
+    fips_code: str 
+    
+class EncompassingArea(BaseModel):
+    states: List[State]
+    counties: List[County]

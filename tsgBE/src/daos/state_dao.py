@@ -18,3 +18,10 @@ class StateDAO:
         result = db.query(State).filter(State.state_fips == state_fips_code).first()
         return result
     
+    def find_states_in_enclosing_area(self, db: Session, enclosing_area):
+        return db.query(State).filter(
+            func.ST_Within(
+                State.geometry, 
+                func.ST_Transform(enclosing_area, 4326)
+            )
+        ).all()

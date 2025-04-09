@@ -18,4 +18,18 @@ class CountyDAO:
         result = db.query(County).filter(County.county_fips == county_fips_code).first()
         return result
 
+    def find_all_by_state_fips_code(self, db:Session, state_fips_code:str):
+        result = db.query(County).filter(County.state_fips == state_fips_code).all()
+        return result
+
+    def find_counties_in_enclosing_area(self, db:Session, enclosing_area):
+        return db.query(County).filter(
+            func.ST_Within(
+                County.geometry, 
+                func.ST_Transform(enclosing_area, 4326)
+            )
+        ).all()
+
+
+
     

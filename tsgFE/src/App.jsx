@@ -22,6 +22,7 @@ function App() {
 	const [zoom, setZoom] = useState(INITIAL_ZOOM)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [quickFactData, setQuickFactData] = useState(null)
+  const [enclosingArea, setEnclosingArea] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -71,6 +72,21 @@ function App() {
       }
 
       setQuickFactData(data);
+
+      const enclosing_area_response = await fetch(`${BE_HOST}/api/v1/encompassing?geo_id=${geoid}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      if (!enclosing_area_response.ok) {
+        throw new Error(`HTTP error! status: ${enclosing_area_response.status}`);
+      }
+      const enclosing_area_data = await enclosing_area_response.json();
+      if (!enclosing_area_data?.states || !enclosing_area_data?.counties) {
+        throw new Error('Invalid data format received from server');
+      }
+      setEnclosingArea(enclosing_area_data);
     } catch (error) {
       console.error('Error fetching data:', error);
       setError(error.message || 'Failed to load data');
@@ -94,6 +110,7 @@ function App() {
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         quickFactData={quickFactData}
+        enclosingArea={enclosingArea}
         isLoading={isLoading}
         error={error}
       />

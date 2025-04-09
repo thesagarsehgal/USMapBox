@@ -15,3 +15,11 @@ async def get_boundaries(
 ):
     service = BoundariesService()
     return service.get_boundaries(boundary_type, db)
+
+@router.get("/encompassing", )
+async def get_encompassing_areas(
+    geo_id: str,
+    db: Session = Depends(get_db)
+):
+    service = BoundariesService()
+    return service.get_encompassing_areas(geo_id, db)
