@@ -34,6 +34,9 @@ To scrape and generate data (if not already downloaded), you can directly run:
 python src/scripts/load_db.py
 ```
 
+### [Loom Demo Video](https://www.loom.com/share/7c4c428c593f4d98953e22b17af7a402?sid=c116f209-d179-4e16-a533-6b82da28ec96)
+
+
 ### FE View:
 <img width="1434" alt="image" src="https://github.com/user-attachments/assets/90a20871-0ac7-4eaf-8c06-70558d09816a" />
 <img width="1440" alt="Screenshot 2025-04-09 at 4 38 40 PM" src="https://github.com/user-attachments/assets/1b83d72b-539f-4eb7-8332-666c4c736e3f" />
